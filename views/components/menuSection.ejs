@@ -1,0 +1,16 @@
+<div class="px-4 py-3">
+  <h3 class="font-semibold mb-2"><%= title %></h3>
+  <ul class="ml-4 space-y-1 text-sm">
+    <% items.forEach(item => { %>
+      <li>
+        <a
+          href="<%= item.to %>"
+          class="block hover:text-red-500
+          <%= path === item.to ? 'text-red-500 font-bold' : 'text-black' %>"
+        >
+          <%= item.label %>
+        </a>
+      </li>
+    <% }) %>
+  </ul>
+</div>

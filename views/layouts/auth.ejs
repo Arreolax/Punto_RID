@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+  <title>Ruedas Industriales Durango</title>
+  <link href="/styles/styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+
+<body class="h-screen overflow-hidden bg-gray-100">
+
+<header class="fixed top-0 left-0 w-full h-14 bg-[#FF2A00] text-white z-50">
+  <div class="flex items-center h-full px-2">
+
+    <button
+      id="menuBtn"
+      class="shrink-0 px-4 text-2xl md:hidden"
+    >
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <div class="flex-1 overflow-x-auto md:overflow-visible no-scrollbar">
+      <div class="flex items-center gap-6 min-w-max md:min-w-0">
+
+        <%- include('../components/topIcon',{icon:'fa-house',label:'Inicio',to:'/'}) %>
+        <%- include('../components/topIcon',{icon:'fa-users',label:'Usuarios',to:'/usuarios'}) %>
+        <%- include('../components/topIcon',{icon:'fa-box',label:'Inventario',to:'/inventario'}) %>
+        <%- include('../components/topIcon',{icon:'fa-file-invoice',label:'Facturación',to:'/facturacion'}) %>
+        <%- include('../components/topIcon',{icon:'fa-ticket',label:'Tickets',to:'/tickets'}) %>
+
+      </div>
+    </div>
+
+    <div class="hidden md:flex items-center gap-4 ml-auto">
+      <div class="flex items-center space-x-2">
+        <%- include('../components/topIcon',{icon:'fa-right-to-bracket',label:'Login',to:'/'}) %>
+      </div>
+
+      <div class="text-right text-[13px]">
+        <p id="fecha"></p>
+        <p id="hora"></p>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<div class="flex h-screen bg-gray-100 pt-14">
+  <div id="overlay" class="fixed inset-0 bg-black/40 z-30 hidden md:hidden"></div>
+  <main class="flex flex-col flex-1 overflow-hidden">
+    <div class="flex-1 overflow-y-auto p-4 md:pt-4 md:pr-4 md:pl-4">
+      <div class="bg-white rounded shadow p-4 md:p-6 text-center">
+        <%- body %>
+      </div>
+    </div>
+
+    <footer class="h-14 border bg-gray-400 flex items-center justify-center gap-4 text-sm md:text-lg">
+      <span>© 2026 - Ruedas Industriales Durango</span>
+      <i class="fa-brands fa-facebook text-xl"></i>
+      <i class="fa-brands fa-whatsapp text-xl"></i>
+      <i class="fa-brands fa-instagram text-xl"></i>
+    </footer>
+
+  </main>
+</div>
+
+<script src="/js/header-menu.js"></script>
+</body>
+</html>
