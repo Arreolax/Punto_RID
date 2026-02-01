@@ -1,0 +1,84 @@
+<div class="px-5">
+  <div class="p-6 space-y-4 border rounded bg-white">
+
+    <h1 class="font-bold text-center text-xl">Tickets</h1>
+
+    <div class="grid grid-cols-2 gap-4 border-t pt-4">
+      <input
+        type="date"
+        class="border rounded px-3 py-2"
+      />
+      <input
+        type="date"
+        class="border rounded px-3 py-2"
+      />
+
+      <div class="flex justify-end">
+        <a href="/tickets"
+           class="px-4 py-2 bg-[#FF2A00] text-white rounded">
+          Mostrar todos
+        </a>
+      </div>
+
+      <div class="flex justify-start">
+        <button class="px-4 py-2 bg-[#FF2A00] text-white rounded">
+          Filtrar
+        </button>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto pt-4">
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-gray-600 text-white">
+            <th class="px-4 py-2 text-left">Fecha</th>
+            <th class="px-4 py-2 text-left">Folio</th>
+            <th class="px-4 py-2 text-left">Cliente</th>
+            <th class="px-4 py-2 text-left">Pago</th>
+            <th class="px-4 py-2 text-center">Productos</th>
+            <th class="px-4 py-2 text-left">Total</th>
+            <th class="px-4 py-2 text-left">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% tickets.forEach(ticket => { %>
+            <tr class="hover:bg-gray-100">
+              <td class="px-4 py-2"><%= ticket.fecha %></td>
+              <td class="px-4 py-2 break-all"><%= ticket.folio %></td>
+              <td class="px-4 py-2"><%= ticket.nombre_cliente %></td>
+              <td class="px-4 py-2"><%= ticket.metodo_pago %></td>
+
+              <td class="px-4 py-2 text-center">
+                <%= ticket.productos.reduce((a,p)=>a+p.cantidad,0) %>
+              </td>
+
+              <td class="px-4 py-2 font-semibold">
+                $
+                <%= ticket.productos.reduce((a,p)=>a+p.total,0).toFixed(2) %>
+              </td>
+
+              <td class="px-4 py-2 space-x-2">
+                <a href="/tickets/preview/<%= ticket.folio %>"
+                   class="bg-green-500 text-white px-2 py-2 rounded inline-block">
+                  <i class="fa-solid fa-eye"></i>
+                </a>
+
+                <a href="/tickets/edit/<%= ticket.folio %>"
+                   class="bg-yellow-300 px-2 py-2 rounded inline-block">
+                  <i class="fa-solid fa-pen"></i>
+                </a>
+
+                <a href="/tickets/delete/<%= ticket.folio %>"
+                   class="bg-red-500 text-white px-2 py-2 rounded inline-block">
+                  <i class="fa-solid fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
