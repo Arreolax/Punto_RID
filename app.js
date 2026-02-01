@@ -1,6 +1,7 @@
 const expressLayouts = require('express-ejs-layouts');
 const express = require('express');
 const path = require('path');
+require('dotenv').config();
 
 const app = express();
 
@@ -22,6 +23,6 @@ app.use((req, res, next) => {
 app.use(require('./routes'));
 
 //donde corre
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
     console.log('Localhost:3000');
 })
