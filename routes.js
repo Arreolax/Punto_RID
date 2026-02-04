@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const inventarioRoutes = require('./routes/inventario.routes');
 
 //Layouts pora especificas paginas (test)
 router.use((req, res, next) => {
@@ -15,9 +16,7 @@ router.use((req, res, next) => {
 
 // Rutas
 
-router.get('/inventario', (req, res) => {
-  res.render('inventario/index');
-});
+router.use('/inventario', inventarioRoutes);
 
 router.get('/', (req, res) => {
   res.render('index');
