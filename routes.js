@@ -15,6 +15,10 @@ router.use((req, res, next) => {
 
 // Rutas
 
+router.get('/inventario', (req, res) => {
+  res.render('inventario/index');
+});
+
 router.get('/', (req, res) => {
   res.render('index');
 });
