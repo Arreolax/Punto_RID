@@ -4,10 +4,10 @@ const router = express.Router();
 //Layouts pora especificas paginas (test)
 router.use((req, res, next) => {
 
-  if (req.path.startsWith('/login') || req.path.startsWith('/register') ) {
+  if (req.path.startsWith('/login') || req.path == "/" ) { //Layout diferentes
     res.locals.layout = 'layouts/auth';
   } else {
-    res.locals.layout = 'layouts/header-menu';
+    res.locals.layout = 'layouts/header-menu';  
   }
 
   next();

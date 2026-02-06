@@ -1,11 +1,9 @@
+<!-- Menu del layout header-menu-->
 <%
-  // Prefijo del módulo (ej: /facturacion, /tickets)
   const modulePrefix = items[0].to.split('/').slice(0, 2).join('/');
 
-  // ¿Estoy dentro de este módulo?
   const isCurrentModule = path.startsWith(modulePrefix);
 
-  // Prefijos de TODOS los módulos
   const modules = [
     '/usuarios',
     '/inventario',
@@ -13,12 +11,8 @@
     '/tickets'
   ];
 
-  // ¿Estoy en algún módulo?
   const isInAnyModule = modules.some(m => path.startsWith(m));
 
-  // Mostrar sección si:
-  // - Estoy en este módulo
-  // - O no estoy en ningún módulo
   const showSection = isCurrentModule || !isInAnyModule;
 %>
 
