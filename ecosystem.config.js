@@ -11,9 +11,7 @@ module.exports = {
     },
     {
       name: "punto-venta-tailwind",
-      // TRUCO: Ejecutamos directamente la consola de Windows
       script: "cmd.exe", 
-      // Le decimos: "Ejecuta 'npm run tailwind' y quédate escuchando"
       args: "/c npm run tailwind",
       interpreter: "none",
       autorestart: true,
