@@ -13,24 +13,8 @@ router.use((req, res, next) => {
   next();
 });
 
-// Rutas
-
 router.get('/', (req, res) => {
   res.render('index');
-});
-
-/*
-router.get('/tickets', (req, res) => {
-  res.render('tickets/tickets');
-});
-
-router.get('/ticketpreview', (req, res) => {
-  res.render('tickets/ticketpreview');
-});
-*/
-//404
-router.use((req, res) => {
-  res.status(404).render('404');
 });
 
 module.exports = router;

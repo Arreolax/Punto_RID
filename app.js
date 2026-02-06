@@ -9,7 +9,7 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-//Layout
+//Layouts
 app.use(expressLayouts);
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -20,9 +20,14 @@ app.use((req, res, next) => {
 });
 
 //rutas
-app.use(require('./routes/routes'));
+app.use('/', require('./routes/routes'));
 
-//donde corre
+//Puerto Servidor
 app.listen(process.env.SERVER_PORT, () => {
     console.log('Localhost:3000');
 })
+
+//404
+app.use((req, res) => {
+  res.status(404).render('404');
+});
