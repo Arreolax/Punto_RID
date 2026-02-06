@@ -1,16 +1,48 @@
-<div class="px-4 py-3">
-  <h3 class="font-semibold mb-2"><%= title %></h3>
-  <ul class="ml-4 space-y-1 text-sm">
-    <% items.forEach(item => { %>
-      <li>
-        <a
-          href="<%= item.to %>"
-          class="block hover:text-red-500
-          <%= path === item.to ? 'text-red-500 font-bold' : 'text-black' %>"
-        >
-          <%= item.label %>
-        </a>
-      </li>
-    <% }) %>
-  </ul>
-</div>
+<%
+  // Prefijo del módulo (ej: /facturacion, /tickets)
+  const modulePrefix = items[0].to.split('/').slice(0, 2).join('/');
+
+  // ¿Estoy dentro de este módulo?
+  const isCurrentModule = path.startsWith(modulePrefix);
+
+  // Prefijos de TODOS los módulos
+  const modules = [
+    '/usuarios',
+    '/inventario',
+    '/facturacion',
+    '/tickets'
+  ];
+
+  // ¿Estoy en algún módulo?
+  const isInAnyModule = modules.some(m => path.startsWith(m));
+
+  // Mostrar sección si:
+  // - Estoy en este módulo
+  // - O no estoy en ningún módulo
+  const showSection = isCurrentModule || !isInAnyModule;
+%>
+
+<% if (showSection) { %>
+  <div class="mb-4">
+    <h3 class="px-4 py-2 text-sm font-bold text-gray-700 uppercase">
+      <%= title %>
+    </h3>
+
+    <ul class="pl-6">
+      <% items.forEach(item => { %>
+        <li>
+          <a
+            href="<%= item.to %>"
+            class="block py-1 text-sm
+              <%= path === item.to
+                ? 'text-[#FF2A00] font-bold'
+                : 'text-gray-600 hover:text-[#FF2A00]' %>
+            "
+          >
+            <%= item.label %>
+          </a>
+        </li>
+      <% }) %>
+    </ul>
+  </div>
+<% } %>

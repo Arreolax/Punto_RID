@@ -13,7 +13,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(expressLayouts);
 app.use(express.static(path.join(__dirname, 'public')));
 
-//
+
+//Middleware global
 app.use((req, res, next) => {
   res.locals.path = req.path;
   next();
