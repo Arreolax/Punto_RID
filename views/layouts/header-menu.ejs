@@ -95,8 +95,6 @@
 
 </aside>
 
-
-
   <div id="overlay" class="fixed inset-0 bg-black/40 z-30 hidden md:hidden"></div>
 
   <main class="ml-0 md:ml-64 flex flex-col flex-1 overflow-hidden">
@@ -118,5 +116,17 @@
 </div>
 
 <script src="/js/header-menu.js"></script>
+
+<!-- Librerías pdf -->
+<script src="/libs/html2canvas.min.js"></script>
+<script src="/libs/jspdf.umd.min.js"></script>
+
+<script>
+  const { jsPDF } = window.jspdf;
+</script>
+
+<script src="/js/generar-ticket-PDF.js"></script>
+<script src="/js/ticket-preview.js"></script>
+
 </body>
 </html>

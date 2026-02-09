@@ -1,0 +1,111 @@
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-5 items-start">
+
+  <div class="pt-4 p-6 space-y-3 border border-black/50 rounded">
+    <h1 class="font-bold text-center">Informacion del ticket</h1>
+
+    <div class="border-t-2 border-black/50  pt-2 flex gap-3">
+      <span class="font-semibold">Fecha y hora:</span>
+      <span class="italic"><%= ticket.fecha %></span>
+    </div>
+
+    <div class="border-t-2 border-black/50 pt-2 flex gap-3">
+      <span  class="font-semibold">Folio:</span>
+      <span class="italic"><%= ticket.folio %></span>
+    </div>
+
+    <div class="border-t-2 border-black/50 pt-2 flex gap-3">
+      <span  class="font-semibold">Cliente:</span>
+      <span class="italic"><%= ticket.nombre_cliente %></span>
+    </div>
+
+    <div class="border-t-2 border-black/50 pt-2 flex gap-3">
+      <span  class="font-semibold">Método de pago:</span>
+      <span class="italic"><%= ticket.metodo_pago %></span>
+    </div>
+
+    <div class="border-t-2 border-black/50 pt-2 flex gap-3">
+      <span  class="font-semibold">Total:</span>
+      <span class="italic">$<%= ticket.total.toFixed(2) %></span>
+    </div>
+
+    <% if (efectivo) { %>
+      <div class="border-t-2 border-black/50 pt-2 flex gap-3">
+        <span class="font-semibold">Efectivo recibido:</span>
+        <span class="italic">$<%= ticket.pagado.toFixed(2) %></span>
+      </div>
+
+      <div class="border-t-2 border-black/50 pt-2 flex gap-3">
+        <span class="font-semibold">Cambio:</span>
+        <span class="italic">$<%= cambio %></span>
+      </div>
+    <% } %>
+
+    <!-- Tabla -->
+    <div class="pt-4 overflow-x-auto">
+      <table class="w-full table-auto border-collapse">
+        <thead>
+          <tr class="bg-gray-600 text-white">
+            <th class="px-4 py-2">Nombre</th>
+            <th class="px-4 py-2">Descripción</th>
+            <th class="px-4 py-2">Precio Unit.</th>
+            <th class="px-4 py-2">Cantidad</th>
+            <th class="px-4 py-2">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% ticket.productos.forEach(producto => { %>
+            <tr class="hover:bg-gray-100">
+              <td class="px-4 py-2"><%= producto.nombre %></td>
+              <td class="px-4 py-2"><%= producto.descripcion %></td>
+              <td class="px-4 py-2">
+                $<%= (producto.total / producto.cantidad).toFixed(4) %>
+              </td>
+              <td class="px-4 py-2"><%= producto.cantidad %></td>
+              <td class="px-4 py-2 font-semibold">
+                $<%= producto.total.toFixed(2) %>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+
+      <div class="flex justify-center border-t-2 border-black/50 mt-4">
+        <button
+          id="btnRegresar"
+          class="mt-4 px-4 py-2 bg-[#FF2A00] text-white rounded hover:bg-[#FF2A00]/80"
+        >
+          Regresar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Preview -->
+  <div class="pt-4 p-6 space-y-3 border border-black/50 rounded text-center">
+    <h1 class="font-bold">Vista Previa</h1>
+
+    <div class="flex justify-center">
+      <%- include('../components/ticket', { ticket }) %>
+    </div>
+
+    <div class="flex justify-center gap-4">
+      <button
+        id="btnGenerarPDF"
+        data-folio="<%= ticket.folio %>"
+        class="mt-4 px-4 py-2 bg-[#FF2A00] text-white rounded hover:bg-[#FF2A00]/80"
+      >
+        Generar Ticket
+      </button>
+
+      <button class="mt-4 px-4 py-2 bg-[#FF2A00] text-white rounded hover:bg-[#FF2A00]/80">
+        Generar Factura
+      </button>
+    </div>
+
+    <p class="mt-4 text-sm text-gray-600">
+      Info de la empresa (usuario, contacto, logo)
+    </p>
+  </div>
+</div>
+
+<script src="/js/ticket-preview.js"></script>
