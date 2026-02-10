@@ -688,10 +688,6 @@ video {
   align-items: center;
 }
 
-.justify-normal {
-  justify-content: normal;
-}
-
 .justify-center {
   justify-content: center;
 }
@@ -760,6 +756,11 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}
+
+.bg-\[\#FF5100\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 81 0 / var(--tw-bg-opacity, 1));
 }
 
 .p-4 {
@@ -915,6 +916,11 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
+.text-\[\#FF5100\] {
+  --tw-text-opacity: 1;
+  color: rgb(255 81 0 / var(--tw-text-opacity, 1));
+}
+
 .shadow {
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
@@ -950,6 +956,11 @@ video {
 .hover\:text-red-200:hover {
   --tw-text-opacity: 1;
   color: rgb(254 202 202 / var(--tw-text-opacity, 1));
+}
+
+.hover\:text-\[\#FF5100\]:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 81 0 / var(--tw-text-opacity, 1));
 }
 
 @media (min-width: 768px) {
