@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const router = express.Router();
 const inventarioRoutes = require('./routes/inventario.routes');
 
@@ -22,6 +22,7 @@ router.get('/', (req, res) => {
   res.render('index');
 });
 
+/*
 router.get('/tickets', (req, res) => {
   res.render('tickets/tickets');
 });
@@ -29,7 +30,7 @@ router.get('/tickets', (req, res) => {
 router.get('/ticketpreview', (req, res) => {
   res.render('tickets/ticketpreview');
 });
-
+*/
 //404
 router.use((req, res) => {
   res.status(404).render('404');
