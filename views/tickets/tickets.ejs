@@ -25,6 +25,7 @@
       </button>
     </div>
 
+    <% if (tickets && tickets.length > 0) { %>
     <div class="overflow-x-auto pt-4">
       <table class="w-full border-collapse">
         <thead>
@@ -40,31 +41,32 @@
         </thead>
 
         <tbody>
-          <% tickets.forEach(ticket=> { %>
+          <% tickets.forEach((ticket) => { %>
             <tr class="hover:bg-gray-100">
               <td class="px-4 py-2">
-                <%= ticket.fecha %>
+                <%= ticket.created_at_ticket_formatted %>
               </td>
               <td class="px-4 py-2 break-all">
-                <%= ticket.folio %>
+                 <%= ticket.folio %>
               </td>
               <td class="px-4 py-2">
                 <%= ticket.nombre_cliente %>
               </td>
               <td class="px-4 py-2">
-                <%= ticket.metodo_pago %>
+               <%= ticket.metodo_pago %>
               </td>
 
               <td class="px-4 py-2 text-center">
-                <%= ticket.productos.reduce((a,p)=>a+p.cantidad,0) %>
+                <%= ticket.total_productos %>
               </td>
 
               <td class="px-4 py-2 font-semibold">
-                $<%= ticket.productos.reduce((a,p)=>a+p.total,0).toFixed(2) %>
+                <%= ticket.total_pago %>
               </td>
 
               <td class="px-4 py-2 space-x-2">
-                <a href="/tickets/preview/<%= ticket.folio %>"
+                <!-- <%= ticket.folio %> -->
+                <a href="/tickets/preview/"
                   class="bg-green-500 text-white px-2.5 py-2.5 rounded inline-block">
                   <i class="fa-solid fa-eye"></i>
                 </a>
@@ -74,7 +76,8 @@
                   <i class="fa-solid fa-pen"></i>
                 </a>
 
-                <a href="/tickets/delete/<%= ticket.folio %>"
+                <!-- <%= ticket.folio %> -->
+                <a href="/tickets/delete/"
                   class="bg-red-500 text-white px-2.5 py-2.5 rounded inline-block">
                   <i class="fa-solid fa-trash"></i>
                 </a>
@@ -84,6 +87,9 @@
         </tbody>
       </table>
     </div>
+    <% } else { %>
+        <p>No hay tickets registrados.</p>
+    <% } %>
 
   </div>
 </div>
@@ -121,7 +127,7 @@
           <label class="block text-sm font-semibold mb-1">Método de Pago</label>
           <select id="metodo_pago" name="metodo_pago"
             class="w-full border rounded px-3 py-2 bg-gray-100 cursor-not-allowed" disabled>
-            <option value="Efectivo">Efectivo</option>
+            <option value="efectivo">Efectivo</option>
             <option value="Tarjeta">Tarjeta</option>
           </select>
         </div>

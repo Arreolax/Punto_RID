@@ -9,23 +9,12 @@ document.querySelectorAll(".btnEditar").forEach(btn => {
     abrirModal();
 
     requestAnimationFrame(() => {
-      modal.querySelector("#fecha").value = ticket.fecha;
+      modal.querySelector("#fecha").value = ticket.created_at_ticket_formatted;
       modal.querySelector("#folio").value = ticket.folio;
       modal.querySelector("#cliente").value = ticket.nombre_cliente;
       modal.querySelector("#metodo_pago").value = ticket.metodo_pago;
-
-      const cant_prod = ticket.productos.reduce(
-        (sum, p) => sum + p.cantidad,
-        0
-      );
-
-      const total = ticket.productos.reduce(
-        (sum, p) => sum + p.total,
-        0
-      );
-
-      modal.querySelector("#cant_prod").value = cant_prod;
-      modal.querySelector("#total").value = total.toFixed(2);
+      modal.querySelector("#cant_prod").value = ticket.total_productos;
+      modal.querySelector("#total").value = ticket.total_pago;
     });
   });
 });
