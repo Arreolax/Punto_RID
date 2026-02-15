@@ -1,0 +1,23 @@
+<!-- Fondo Alerta -->
+<div id="alertBackdrop" class="fixed inset-0 bg-black/50 z-50 hidden"></div>
+
+<!-- Modal Alerta -->
+<div id="alertModal" class="fixed inset-0 z-50 hidden items-center justify-center">
+  <div class="bg-white w-full max-w-md rounded-lg shadow-xl p-6 relative">
+
+    <div class="flex items-center gap-3 mb-4">
+      <div id="alertIcon" class="text-2xl"></div>
+      <h3 id="alertTitle" class="text-lg font-bold"></h3>
+    </div>
+
+    <p id="alertMessage" class="text-gray-700 mb-6"></p>
+
+    <div class="flex justify-end">
+      <button id="alertClose"
+        class="px-4 py-2 rounded bg-gray-700 text-white hover:bg-gray-800">
+        Aceptar
+      </button>
+    </div>
+
+  </div>
+</div>
