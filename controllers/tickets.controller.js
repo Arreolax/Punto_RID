@@ -23,11 +23,11 @@ const getAllTickets = async (req, res) => {
     }
 
     res.render('tickets/tickets', {
-  tickets,
-  errorMessage: null,
-  fechaInicio,
-  fechaFin
-});
+      tickets,
+      errorMessage: null,
+      fechaInicio,
+      fechaFin
+    });
 
   } catch (error) {
 
@@ -40,6 +40,35 @@ const getAllTickets = async (req, res) => {
   }
 };
 
+const getTicketPreview = async (req, res) => {
+  try {
+    const { folio } = req.params;
+
+    const ticket = await ticketService.getTicketByFolioService(folio);
+
+    if (!ticket) {
+      return res.render('tickets/preview', {
+        ticket: null,
+        errorMessage: "Ticket no encontrado."
+      });
+    }
+
+    res.render('tickets/preview', {
+      ticket,
+      errorMessage: null
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    res.render('tickets/preview', {
+      ticket: null,
+      errorMessage: "Ocurrió un error al cargar el ticket."
+    });
+  }
+};
+
 module.exports = {
-  getAllTickets
+  getAllTickets,
+  getTicketPreview
 };

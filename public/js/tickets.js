@@ -1,15 +1,3 @@
-//mostrarAlerta("success", "success_text");
-//mostrarAlerta("error", "error_text");
-//mostrarAlerta("warning", "warning_text");
-
-// Pantalla Carga
-const loader = document.getElementById("loader");
-const contenido = document.getElementById("contenido");
-
-function ocultarLoader() {
-  loader.classList.add("hidden");
-  contenido.classList.remove("hidden");
-}
 // Filtrar Fechas
 const formFiltro = document.querySelector("form");
 const inputFechaInicio = document.querySelector("input[name='fechaInicio']");
@@ -22,13 +10,13 @@ formFiltro.addEventListener("submit", function (e) {
 
   if (!fechainicio || !fechafin) {
     e.preventDefault();
-    mostrarAlerta("error", "Debes seleccionar ambas fechas.");
+    mostrarAlerta("error", "Selecciona ambas fechas");
     return;
   }
 
   if (fechafin < fechainicio) {
     e.preventDefault();
-    mostrarAlerta("error", "La fecha final no puede ser menor que la inicial.");
+    mostrarAlerta("error", "La fecha final no puede ser menor que la inicial");
     return;
   }
 });
@@ -69,12 +57,3 @@ function cerrarModal() {
 
 btnCerrar.addEventListener("click", cerrarModal);
 backdrop.addEventListener("click", cerrarModal);
-
-// Mostrar pantalla carga - Errores
-window.addEventListener("load", () => {
-  ocultarLoader();
-
-  if (window.SERVER_ERROR) {
-    mostrarAlerta("error", window.SERVER_ERROR);
-  }
-});

@@ -81,10 +81,9 @@
                   <td class="px-4 py-2 font-semibold">
                     <%= ticket.total_pago %>
                   </td>
-
+ 
                   <td class="px-4 py-2 space-x-2">
-                    <!-- <%= ticket.folio %> -->
-                    <a href="/tickets/preview/" class="bg-green-500 text-white px-2.5 py-2.5 rounded inline-block">
+                    <a href="/tickets/preview/<%= ticket.folio %>" class="bg-green-500 text-white px-2.5 py-2.5 rounded inline-block">
                       <i class="fa-solid fa-eye"></i>
                     </a>
 

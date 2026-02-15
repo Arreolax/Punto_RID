@@ -1,25 +1,22 @@
-<div id="ticket-pdf"
-  class="bg-white text-black w-75.5 p-4 font-mono text-sm border border-black/50 shadow relative">
-  <img
-    src="/images/logo-b.png"
-    alt="Logo empresa"
-    class="absolute top-2 right-3 h-12 object-contain"
-  />
+<div id="ticket-pdf" class="bg-white text-black w-75.5 p-4 font-mono text-sm border border-black/50 shadow relative">
+  <img src="/images/logo-b.png" alt="Logo empresa" class="absolute top-2 right-3 h-12 object-contain" />
 
-  <div class="text-left text-[11px] mb-3 pr-14">
+  <div class="text-left text-[10px] mb-3 pr-14 -space-y-0.5">
     <p class="font-bold">RUEDAS INDUSTRIALES</p>
-    <p>MOAF960204R85</p>
+    <p class="font-bold">+618 122 2121</p>
+    <p>MOAF960204R85 <-- Que es esto </p>
     <p>Nombre de Dios 138 Col. José Ángel Leal</p>
-    <p>34206</p>
-    <p>MEX.</p>
+    <p>34206 MEX.</p>
+  </div>
+
+  <div class="text-left text-xs">
+    <p>ATENDIDO POR: <%= ticket.nombre_empleado %></p>
+    <p>CLIENTE: PUBLICO EN GENERAL</p>
   </div>
 
 
-  <p class="text-center my-3">CLIENTE: PUBLICO EN GENERAL</p>
-
-  <div class="text-center font-bold mb-3">
-    <p>NOTA DE VENTA</p>
-    <p><%= ticket.folio %></p>
+  <div class="text-center font-bold mb-3 mt-2">
+    <p>NOTA DE VENTA: <%= ticket.folio %></p>
   </div>
 
   <div class="border-t border-b border-black py-1 grid grid-cols-6 font-extrabold text-[11px]">
@@ -31,21 +28,29 @@
   </div>
 
   <div class="mt-2 space-y-2 text-[11px]">
-    <% ticket.productos.forEach(p => { %>
+    <% ticket.productos.forEach(p=> { %>
       <div class="grid grid-cols-6">
-        <span><%= p.cantidad %></span>
-        <span><%= p.codigo %></span>
-        <span class="col-span-2 break-words"><%= p.nombre %></span>
-        <span><%= (p.total / p.cantidad).toFixed(2) %></span>
+        <span>
+          <%= p.cantidad %>
+        </span>
+        <span>
+          <%= p.codigo %>
+        </span>
+        <span class="col-span-2 break-words">
+          <%= p.nombre %>
+        </span>
+        <span>
+          <%= p.precio_unidad %>
+        </span>
         <span class="text-right font-semibold">
-          $<%= (p.total).toFixed(2) %>
+          $<%= p.subtotal %>
         </span>
       </div>
-    <% }) %>
+      <% }) %>
   </div>
 
-  <div class="border-t border-black mt-3 pt-2 font-bold text-[12px]">
-    Total $<%= ticket.total.toFixed(2) %>
+  <div class="border-t border-black mt-3 pt-2 font-extrabold text-[12px]">
+    Total $<%= ticket.total_pago %>
   </div>
 
   <div class="text-center text-[11px] mt-4">

@@ -1,3 +1,12 @@
+// Pantalla Carga
+const loader = document.getElementById("loader");
+const contenido = document.getElementById("contenido");
+
+function ocultarLoader() {
+  loader.classList.add("hidden");
+  contenido.classList.remove("hidden");
+}
+
 // Modal Alerta
 const alertModal = document.getElementById("alertModal");
 const alertBackdrop = document.getElementById("alertBackdrop");
@@ -47,3 +56,8 @@ if (alertClose) {
 }
 
 window.mostrarAlerta = mostrarAlerta;
+
+// Pantalla Carga
+window.addEventListener("load", () => {
+  ocultarLoader();
+});

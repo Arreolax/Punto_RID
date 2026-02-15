@@ -30,7 +30,6 @@ const getTicketsDatesService = async (fechaInicio, fechaFin) => {
         const query = `
         SELECT 
         DATE_FORMAT(t.created_at, '%d/%m/%Y %H:%i:%s') AS created_at_ticket_formatted,
-        DATE_FORMAT(t.created_at, '%d/%m/%Y') AS created_at_ticket_formatted_date,
         t.ticket_number AS folio,
         c.name AS nombre_cliente,
         s.payment_method AS metodo_pago,
@@ -53,7 +52,76 @@ const getTicketsDatesService = async (fechaInicio, fechaFin) => {
     }
 };
 
+const getTicketByFolioService = async (folio) => {
+    try {
+        const query = `
+        SELECT 
+        DATE_FORMAT(t.created_at, '%d/%m/%Y %H:%i:%s') AS fecha_con_formato,
+        t.ticket_number AS folio,
+        
+        c.name AS nombre_cliente,
+        
+        u.username AS nombre_empleado,
+        
+        s.payment_method AS metodo_pago,
+        s.total AS total_pago,
+        s.cash_received AS total_recibido,
+        s.change_given AS cambio,
+        s.id AS sale_id,
+        
+        p.ref_producto AS codigo,
+
+        ti.product_name AS producto_nombre,
+        ti.description AS producto_descripcion,
+        ti.quantity AS producto_cantidad,
+        ti.unit_price AS precio_unidad,
+        ti.subtotal AS subtotal
+            
+        FROM tickets t
+        JOIN sales s ON t.sale_id = s.id
+        JOIN clients c ON s.client_id = c.id
+        JOIN users u ON t.user_id = u.id
+        JOIN ticket_items ti ON ti.ticket_id = s.id
+        JOIN products p ON ti.product_id = p.id
+        WHERE t.ticket_number = ?;
+        `;
+
+        const [rows] = await db.query(query, [folio]);
+        
+        if (rows.length === 0) return null;
+
+        const ticket = {
+            folio: rows[0].folio,
+            fecha: rows[0].fecha_con_formato,
+            nombre_empleado: rows[0].nombre_empleado,
+            nombre_cliente: rows[0].nombre_cliente,
+            metodo_pago: rows[0].metodo_pago,
+            total_pago: rows[0].total_pago,
+            total_recibido: rows[0].total_recibido,
+            cambio: rows[0].cambio,
+            productos: []
+        };
+
+        rows.forEach(row => {
+            ticket.productos.push({
+                nombre: row.producto_nombre,
+                codigo: row.codigo,
+                descripcion: row.producto_descripcion,
+                cantidad: row.producto_cantidad,
+                precio_unidad: row.precio_unidad,
+                subtotal: row.subtotal
+            });
+        });
+
+        return ticket;
+
+    } catch (error) {
+        throw new Error('Error en el servicio al obtener ticket por folio: ' + error.message);
+    }
+};
+
 module.exports = {
     getTicketsService,
-    getTicketsDatesService
+    getTicketsDatesService,
+    getTicketByFolioService
 };
