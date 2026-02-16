@@ -1,5 +1,7 @@
 <!-- Menu del layout header-menu-->
 <%
+  const shouldForceShow = typeof forceShow !== 'undefined' ? forceShow : false;
+
   const modulePrefix = items[0].to.split('/').slice(0, 2).join('/');
 
   const isCurrentModule = path.startsWith(modulePrefix);
@@ -13,7 +15,7 @@
 
   const isInAnyModule = modules.some(m => path.startsWith(m));
 
-  const showSection = isCurrentModule || !isInAnyModule;
+  const showSection = shouldForceShow || isCurrentModule || !isInAnyModule;
 %>
 
 <% if (showSection) { %>
