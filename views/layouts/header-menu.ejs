@@ -25,7 +25,7 @@
             <%- include('../components/topIcon',{icon:'fa-users',label:'Usuarios',to:'/usuarios'}) %>
               <%- include('../components/topIcon',{icon:'fa-box',label:'Inventario',to:'/inventario'}) %>
                 <%- include('../components/topIcon',{icon:'fa-file-invoice',label:'Facturación',to:'/facturacion'}) %>
-                  <%- include('../components/topIcon',{icon:'fa-bag-shopping',label:'Ventas',to:'/tickets'}) %>
+                  <%- include('../components/topIcon',{icon:'fa-bag-shopping',label:'Ventas',to:'/ventas'}) %>
 
         </div>
       </div>
@@ -68,12 +68,12 @@
               to:'/facturacion/pagos' } ], path, setMenu: ()=> { hasMenu = true }
               }) %>
 
-            <%- include('../components/menuSection',{ title:'Ventas', items:[ { label:'Ventas',
-                  to:'/reportes/ventas' }, { label:'Inventario', to:'/reportes/inventario' } ], path, forceShow:
-                  path.startsWith('/tickets') }) %>
+            <%- include('../components/menuSection',{ title:'Ventas', items:[ { label:'Ventas Registradas',
+                  to:'/ventas' }, { label:'Nueva Venta', to:'/ventas/nueva' } ], path, forceShow:
+                  path.startsWith('/tickets') || path.startsWith('/ventas') }) %>
 
-            <%- include('../components/menuSection',{ title:'Tickets', items:[{ label:'Lista de tickets',
-                to:'/tickets' }], path, forceShow: path.startsWith('/tickets') }) %>
+            <%- include('../components/menuSection',{ title:'Tickets', items:[{ label:'Tickets Registrados',
+                to:'/tickets' }], path, forceShow: path.startsWith('/tickets') || path.startsWith('/ventas') }) %>
 
     </aside>
 
@@ -82,7 +82,7 @@
     <main class="ml-0 md:ml-64 flex flex-col flex-1 overflow-hidden">
 
       <div class="flex-1 overflow-y-auto pt-2 pb-2 pr-4 pl-4 ">
-        <div class="bg-white rounded shadow p-4 md:p-6 min-h-full flex flex-col">
+        <div class="bg-white border border-gray-400/50 rounded shadow p-4 md:p-6 min-h-full flex flex-col">
           <%- body %>
         </div>
       </div>

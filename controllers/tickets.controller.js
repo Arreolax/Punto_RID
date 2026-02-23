@@ -68,6 +68,7 @@ const getTicketPreview = async (req, res) => {
   }
 };
 
+
 module.exports = {
   getAllTickets,
   getTicketPreview

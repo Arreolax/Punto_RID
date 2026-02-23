@@ -2,19 +2,20 @@ const db = require('../config/database');
 
 const getTicketsService = async () => {
     try {
-        const query = `SELECT DATE_FORMAT(t.created_at, '%d/%m/%Y %H:%i:%s') AS created_at_ticket_formatted,
-        DATE_FORMAT(t.created_at, '%d/%m/%Y') AS created_at_ticket_formatted_date,
-        t.ticket_number AS folio,
-        c.name AS nombre_cliente,
-        s.payment_method AS metodo_pago,
-        COUNT(si.id) AS total_productos,
-        s.total AS total_pago
-        FROM tickets t
-        JOIN sales s ON t.sale_id = s.id
-        JOIN clients c ON s.client_id = c.id
-        JOIN sale_items si ON si.sale_id = s.id
-        GROUP BY  t.id, t.created_at, t.ticket_number, c.name, s.payment_method, s.total
-        ORDER BY t.created_at DESC;`;
+        const query = `SELECT 
+    DATE_FORMAT(t.created_at, '%d/%m/%Y %H:%i:%s') AS created_at_ticket_formatted,
+    t.ticket_number AS folio,
+    c.name AS nombre_cliente,
+    s.payment_method AS metodo_pago, 
+    SUM(ti.quantity) AS total_productos,
+    s.total AS total_pago
+FROM tickets t
+JOIN sales s ON t.sale_id = s.id
+JOIN clients c ON s.client_id = c.id
+JOIN ticket_items ti ON ti.ticket_id = t.id
+WHERE t.created_at IS NOT NULL
+GROUP BY t.id, t.created_at, t.ticket_number, c.name, s.payment_method, s.total
+ORDER BY t.created_at DESC;`;
 
         const [rows] = await db.query(query);
         return rows;
@@ -27,20 +28,19 @@ const getTicketsService = async () => {
 
 const getTicketsDatesService = async (fechaInicio, fechaFin) => {
     try {
-        const query = `
-        SELECT 
-        DATE_FORMAT(t.created_at, '%d/%m/%Y %H:%i:%s') AS created_at_ticket_formatted,
+        const query = `SELECT DATE_FORMAT(t.created_at, '%d/%m/%Y %H:%i:%s') AS created_at_ticket_formatted,
         t.ticket_number AS folio,
         c.name AS nombre_cliente,
         s.payment_method AS metodo_pago,
-        COUNT(si.id) AS total_productos,
+        SUM(ti.quantity) AS total_productos,
         s.total AS total_pago
+
         FROM tickets t
         JOIN sales s ON t.sale_id = s.id
         JOIN clients c ON s.client_id = c.id
-        JOIN sale_items si ON si.sale_id = s.id
+        JOIN ticket_items ti ON ti.ticket_id = t.id
         WHERE t.created_at BETWEEN ? AND ?
-        GROUP BY t.id, t.created_at, t.ticket_number, c.name, s.payment_method, s.total
+        GROUP BY  t.id, t.created_at, t.ticket_number, c.name, s.payment_method, s.total
         ORDER BY t.created_at DESC;
         `;
 
@@ -52,16 +52,22 @@ const getTicketsDatesService = async (fechaInicio, fechaFin) => {
     }
 };
 
+//Preview
 const getTicketByFolioService = async (folio) => {
     try {
         const query = `
         SELECT 
         DATE_FORMAT(t.created_at, '%d/%m/%Y %H:%i:%s') AS fecha_con_formato,
         t.ticket_number AS folio,
+        t.company_name AS compania,
+        t.company_phone AS compania_telefono,
+        t.company_logo_path AS compania_logo,
+        t.commercial_message AS mensaje_comercial,
         
         c.name AS nombre_cliente,
         
-        u.username AS nombre_empleado,
+        u.username AS username_empleado,
+        CONCAT(u.name, ' ', u.last_name) AS nombre_empleado,
         
         s.payment_method AS metodo_pago,
         s.total AS total_pago,
@@ -93,6 +99,11 @@ const getTicketByFolioService = async (folio) => {
         const ticket = {
             folio: rows[0].folio,
             fecha: rows[0].fecha_con_formato,
+            nombre_compania: rows[0].compania,
+            telefono_compania: rows[0].compania_telefono,
+            compania_logo: rows[0].compania_logo,
+            mensaje_comercial: rows[0].mensaje_comercial,
+            username_empleado: rows[0].username_empleado,
             nombre_empleado: rows[0].nombre_empleado,
             nombre_cliente: rows[0].nombre_cliente,
             metodo_pago: rows[0].metodo_pago,
@@ -104,6 +115,7 @@ const getTicketByFolioService = async (folio) => {
 
         rows.forEach(row => {
             ticket.productos.push({
+            //  nombre a usar: nombre en la consulta
                 nombre: row.producto_nombre,
                 codigo: row.codigo,
                 descripcion: row.producto_descripcion,

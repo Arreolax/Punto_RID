@@ -1,13 +1,14 @@
-<div id="ticket-pdf" class="bg-white text-black w-75.5 p-4 font-mono text-sm border border-black/50 shadow relative">
-  <img src="/images/logo-b.png" alt="Logo empresa" class="absolute top-2 right-3 h-12 object-contain" />
+<div id="ticket-pdf" class="bg-white text-black p-4 font-mono text-sm border border-black/50 shadow relative" style="width:80mm;">
+  <img src="<%= ticket.compania_logo %>" alt="Logo empresa" class="absolute top-2 right-3 h-12 object-contain" />
 
-  <div class="text-left text-[10px] mb-3 pr-14 -space-y-0.5">
-    <p class="font-bold">RUEDAS INDUSTRIALES</p>
-    <p class="font-bold">+618 122 2121</p>
-    <p>MOAF960204R85 <-- Que es esto </p>
+  <div class="text-left text-[10px] mb-3 pr-13 -space-y-0.5">
+    <p class="font-bold"><%= ticket.nombre_compania %></p>
+    <p class="font-bold">+<%= ticket.telefono_compania %></p>
+    <p>MOAF960204R85</p>
     <p>Nombre de Dios 138 Col. José Ángel Leal</p>
-    <p>34206 MEX.</p>
-  </div>
+    <p>34206 MEX.</p> 
+    <p class="pt-1">00/00/2020 00:00:00</p> 
+  </div> 
 
   <div class="text-left text-xs">
     <p>ATENDIDO POR: <%= ticket.nombre_empleado %></p>
@@ -19,7 +20,7 @@
     <p>NOTA DE VENTA: <%= ticket.folio %></p>
   </div>
 
-  <div class="border-t border-b border-black py-1 grid grid-cols-6 font-extrabold text-[11px]">
+  <div class="border-t border-b border-black py-1 grid grid-cols-[35px_40px_45px_45px_50px_50px] font-extrabold text-[11px]">
     <span>Cant</span>
     <span>Cod</span>
     <span class="col-span-2">Prod</span>
@@ -29,9 +30,9 @@
 
   <div class="mt-2 space-y-2 text-[11px]">
     <% ticket.productos.forEach(p=> { %>
-      <div class="grid grid-cols-6">
+      <div class="grid grid-cols-[35px_40px_45px_45px_50px_50px]">
         <span>
-          <%= p.cantidad %>
+          <%= p.cantidad %>000
         </span>
         <span>
           <%= p.codigo %>
@@ -40,7 +41,7 @@
           <%= p.nombre %>
         </span>
         <span>
-          <%= p.precio_unidad %>
+          $<%= p.precio_unidad %>
         </span>
         <span class="text-right font-semibold">
           $<%= p.subtotal %>
@@ -51,11 +52,11 @@
 
   <div class="border-t border-black mt-3 pt-2 font-extrabold text-[12px]">
     Total $<%= ticket.total_pago %>
-  </div>
+  </div> 
 
   <div class="text-center text-[11px] mt-4">
     <p>ESTE NO ES UN COMPROBANTE FISCAL</p>
     <p>** Un giro de experiencia **</p>
-    <p>*** GRACIAS POR SU PREFERENCIA ***</p>
+    <p> <%= ticket.mensaje_comercial %></p>
   </div>
 </div>

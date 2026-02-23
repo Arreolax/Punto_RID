@@ -1,0 +1,149 @@
+<!-- Pantalla de carga -->
+<%- include('../partials/loadingScreen', { loaderText: 'Cargando Venta...' }) %>
+
+  <!-- Contenido -->
+  <% if (sale) { %>
+    <div class="grid grid-cols-1 gap-6 px-5 items-start">
+
+      <!-- Sale Info -->
+      <div class="pt-4 p-6 space-y-3 border border-black/50 rounded">
+        <h1 class="font-bold text-center">Informacion de la venta</h1>
+        <div class="grid grid-cols-2 space-y-3">
+          <div class="space-y-3">
+            <div class="border-t-2 border-black/50  pt-2 flex gap-3">
+              <span class="font-semibold">Fecha y hora de creacion:</span>
+              <span class="italic">
+                <%= sale.fecha %>
+              </span>
+            </div>
+
+            <div class="border-t-2 border-black/50  pt-2 flex gap-3">
+              <span class="font-semibold">Nombre del vendedor:</span>
+              <span class="italic">
+                <%= sale.nombre_empleado %>
+              </span>
+            </div>
+
+            <div class="border-t-2 border-black/50 pt-2 flex gap-3">
+              <span class="font-semibold">Nombre del cliente:</span>
+              <span class="italic">
+                <%= sale.nombre_cliente %>
+              </span>
+            </div>
+
+            <div class="border-t-2 border-black/50 pt-2 flex gap-3">
+              <span class="font-semibold">Método de pago:</span>
+              <span class="italic">
+                <%= sale.metodo_pago.charAt(0).toUpperCase() + sale.metodo_pago.slice(1).toLowerCase() %>
+              </span>
+            </div>
+
+            <% if(sale.referencia_pago !=null) { %>
+              <div class="border-t-2 border-black/50 pt-2 flex gap-3">
+                <span class="font-semibold">Referencia de pago:</span>
+                <span class="italic">
+                  <%= sale.referencia_pago %>
+                </span>
+              </div>
+              <% } %>
+
+                <% if(sale.total_recibido !=null) { %>
+                  <div class="border-t-2 border-black/50 pt-2 flex gap-3">
+                    <span class="font-semibold">Efectivo recibido:</span>
+                    <span class="italic font-bold">$<%= sale.total_recibido %> </span>
+                  </div>
+                  <% } %>
+
+                    <div class="border-t-2 border-black/50 pt-2 flex gap-3">
+                      <span class="font-semibold">Total de compra:</span>
+                      <span class="italic font-bold">$<%= sale.total_pago %> </span>
+                    </div>
+
+                    <% if(sale.cambio !=null) { %>
+                      <div class="border-t-2 border-black/50 pt-2 flex gap-3">
+                        <span class="font-semibold">Cambio devuelto:</span>
+                        <span class="italic font-bold text-green-700">$<%= sale.cambio %> </span>
+                      </div>
+                      <% } %>
+
+          </div>
+          <div class="top-2 right-3 h-12 object-contain text-center mx-auto">
+            <img src="/images/logo-w.png" alt="Logo empresa" />
+          </div>
+        </div>
+
+        <!-- Tabla -->
+        <div class="pt-4 overflow-x-auto">
+          <table class="w-full table-auto border-collapse">
+            <thead>
+              <tr class="bg-gray-600 text-white">
+                <th class="px-4 py-2">Codigo Producto</th>
+                <th class="px-4 py-2">Etiqueta del Producto</th>
+                <th class="px-4 py-2">Categoria</th>
+                <th class="px-4 py-2">Precio Unitario</th>
+                <th class="px-4 py-2">Cantidad</th>
+                <th class="px-4 py-2">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody class="text-center">
+              <% sale.productos.forEach(producto=> { %>
+                <tr class="hover:bg-gray-100">
+                  <td class="px-4 py-2">
+                    <%= producto.codigo %>
+                  </td>
+                  <td class="px-4 py-2 italic">
+                    <%= producto.nombre %>
+                  </td>
+                  <td class="px-4 py-2">
+                    <%= producto.categoria %>
+                  </td>
+                  <td class="px-4 py-2 italic">
+                    $<%= producto.precio_unidad %>
+                  </td>
+                  <td class="px-4 py-2">
+                    <%= producto.cantidad %> unidades
+                  </td>
+                  <td class="px-4 py-2 font-bold">
+                    $<%= producto.subtotal %>
+                  </td>
+                </tr>
+                <% }) %>
+            </tbody>
+          </table>
+
+          <div class="flex justify-center pt-2 border-t-2 border-black/50 mt-4 space-x-10">
+            <button id="btnRegresarS" class="mt-4 px-4 py-2 bg-[#FF2A00] text-white rounded hover:bg-[#FF2A00]/80">
+              Regresar
+            </button>
+            <% if(sale.folio_ticket !=null) { %>
+            <a href="/tickets/preview/<%= sale.folio_ticket %>"
+              class="mt-4 px-4 py-2 bg-[#FF2A00] text-white rounded hover:bg-[#FF2A00]/80 inline-block text-center">
+              Ver Ticket
+            </a>
+            <% }else{ %>
+             <a href=""
+              class="mt-4 px-4 py-2 bg-[#FF2A00] text-white rounded hover:bg-[#FF2A00]/80 inline-block text-center">
+              Generar Ticket
+            </a>
+            <% } %>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <% }else{ %>
+      <div class="border-black/30 border-t-4 p-6 text-center">
+        <p class="text-center font-bold text-2xl">Venta no encontrada</p>
+        <i class="fa-solid fa-circle-exclamation text-[120px] pt-3 text-red-500"></i>
+      </div>
+      <% } %>
+
+        <!-- Alert Modal -->
+        <%- include('../partials/alertModal') %>
+
+          <script>
+            window.errorMessage = "<%= errorMessage || '' %>";
+          </script>
+
+          <script src="/js/sale-preview.js"></script>

@@ -7,6 +7,11 @@ function ocultarLoader() {
   contenido.classList.remove("hidden");
 }
 
+function mostrarLoader() {
+  loader.classList.remove("hidden");
+  contenido.classList.add("hidden");
+}
+
 // Modal Alerta
 const alertModal = document.getElementById("alertModal");
 const alertBackdrop = document.getElementById("alertBackdrop");
@@ -48,6 +53,10 @@ function cerrarAlerta() {
   alertModal.classList.add("hidden");
   alertModal.classList.remove("flex");
   alertBackdrop.classList.add("hidden");
+
+  if (window.errorMessage) {
+    window.history.back();
+  }
 }
 
 if (alertClose) {
@@ -55,9 +64,14 @@ if (alertClose) {
   alertBackdrop.addEventListener("click", cerrarAlerta);
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.errorMessage) {
+    mostrarAlerta("error",window.errorMessage);
+  }
+});
+
 window.mostrarAlerta = mostrarAlerta;
 
-// Pantalla Carga
 window.addEventListener("load", () => {
   ocultarLoader();
 });

@@ -23,6 +23,7 @@ app.use((req, res, next) => {
 //rutas
 app.use('/', require('./routes/routes'));
 app.use('/tickets', require('./routes/tickets.routes'));
+app.use('/ventas', require('./routes/ventas.routes'));
 
 //Puerto Servidor
 app.listen(process.env.SERVER_PORT, () => {

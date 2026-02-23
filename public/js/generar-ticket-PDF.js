@@ -9,14 +9,18 @@ async function generarTicketPDF(folio) {
 
   const imgData = canvas.toDataURL('image/png');
 
-  const pdfHeight = (canvas.height * 80) / canvas.width;
+  // 🔹 Ancho fijo real del ticket (80mm)
+  const pdfWidth = 80; 
+
+  // 🔹 Calcular alto proporcionalmente
+  const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
   const pdf = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',
-    format: [80, pdfHeight],
+    format: [pdfWidth, pdfHeight],
   });
 
-  pdf.addImage(imgData, 'PNG', 0, 0, 80, pdfHeight);
+  pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
   pdf.save(`ticket_${folio}.pdf`);
 }

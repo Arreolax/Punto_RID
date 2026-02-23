@@ -1,0 +1,74 @@
+<!-- Pantalla de carga -->
+<%- include('../partials/loadingScreen', { loaderText: 'Cargando...' }) %>
+
+<!-- Contenido -->
+<div id="contenido">
+    <div class="px-5">
+        <div class="p-6 space-y-4 border-4 border-black/20  rounded bg-white">
+            <h1 class="font-bold text-center text-xl">Crear Nueva Venta</h1>
+            <!-- Formulario -->
+            <form method="" action="">
+                <div class="grid grid-cols-2 gap-4 border-t-4 border-black/30 pt-4">
+                    <div class="flex flex-col">
+                        <label class="text-sm font-semibold mb-1">Vendedor</label>
+                        <input title="Nombre del Vendedor" name="vendedor" type="text" value="" required
+                            class="border-2 border-black/50 rounded px-3 py-2" disabled />
+                    </div>
+
+                     <div class="flex flex-col">
+                        <label class="text-sm font-semibold mb-1">Cliente</label>
+                        <input title="Nombre del Cliente" name="cliente" type="text" value="Publico en General" required
+                            class="border-2 border-black/50 rounded px-3 py-2" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">Método de Pago</label>
+                        <select id="metodo_pago" name="metodo_pago" required
+                            class="w-full border rounded px-3 py-2 bg-gray-100">
+                            <option value="">Selecciona un metodo..</option>
+                            <option value="efectivo">Efectivo</option>
+                            <option value="tarjeta">Tarjeta</option>
+                            <option value="transferencia">Transferencia</option>
+                        </select>
+                    </div>
+
+                    <div id="referencia" class="flex flex-col">
+                        <label class="text-sm font-semibold mb-1">Referencia de Pago</label>
+                        <input title="Referencia de Pago" name="refPago" type="text" required
+                            class="border-2 border-black/50 rounded px-3 py-2" />
+                    </div>
+
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 pt-4" id="efectivoOptions">
+                    <div id="efectivoRecibido" class="flex flex-col">
+                        <label class="text-sm font-semibold mb-1">Cantidad Recibida</label>
+                        <input title="Cantidad Recibida" name="pagoRecibido" type="number" step="0.01" min="0" placeholder="0.00" required
+                            class="border-2 border-black/50 rounded px-3 py-2" />
+                    </div>
+
+                    <div id="efectivoCambio" class="flex flex-col">
+                        <label class="text-sm font-semibold mb-1">Cambio</label>
+                        <input title="Cambio a devolver" name="cambio" type="number" disabled required
+                            class="border-2 border-black/50 rounded px-3 py-2" />
+                    </div>
+                </div>
+
+                <div class="flex justify-end space-x-10 mt-4">
+
+                    <a title="Ver todas las ventas registradas" href="/ventas"
+                        class="px-4 py-2 bg-[#FF2A00] text-white rounded text-center">
+                        Guardar Venta
+                    </a>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- Alert Modal -->
+<%- include('../partials/alertModal') %>
+
+    <script src="/js/sale-new.js"></script>
