@@ -1,24 +1,41 @@
 const salesService = require('../services/sales.service');
 
 const getAllSales = async (req, res) => {
-    try { 
+  try {
 
-        sales = await salesService.getSalesService();
+    const { fechaInicio, fechaFin } = req.query;
+    let sales;
 
-        res.render('ventas/ventas', {
-            sales,
-            errorMessage: null,
-        });
+    if (fechaInicio && fechaFin) {
 
-    } catch (error) {
+      const fechaInicioCompleta = `${fechaInicio} 00:00:00`;
+      const fechaFinCompleta = `${fechaFin} 23:59:59`;
 
-        console.error(error);
+      sales = await salesService.getSalesDatesService(
+        fechaInicioCompleta,
+        fechaFinCompleta
+      );
 
-        res.render('ventas/ventas', {
-            sales: [],
-            errorMessage: "Ocurrió un error al cargar las ventas."
-        });
+    } else {
+      sales = await salesService.getSalesService();
     }
+
+    res.render('ventas/ventas', {
+      sales,
+      errorMessage: null,
+      fechaInicio,
+      fechaFin
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.render('ventas/ventas', {
+      sales: [],
+      errorMessage: "Ocurrió un error al cargar las ventas."
+    });
+  }
 };
 
 const getSalePreview = async (req, res) => {
@@ -50,6 +67,6 @@ const getSalePreview = async (req, res) => {
 };
 
 module.exports = {
-    getAllSales,
-    getSalePreview
+  getAllSales,
+  getSalePreview
 };

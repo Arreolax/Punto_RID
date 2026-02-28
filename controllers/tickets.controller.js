@@ -39,7 +39,7 @@ const getAllTickets = async (req, res) => {
     });
   }
 };
-
+ 
 const getTicketPreview = async (req, res) => {
   try {
     const { folio } = req.params;
